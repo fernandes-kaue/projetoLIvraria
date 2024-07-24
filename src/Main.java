@@ -1,46 +1,72 @@
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        int[][] numsA = new int[10][7];
-        double totalOdds = 0, finalOddRate = 0, totalEvens = 0, finalEvenRate = 0;
+        // Definindo o número de alunos
+        final int NUM_ALUNOS = 5;
 
-        for (int i = 0; i < numsA.length; i++) {
-            for (int j = 0; j < numsA[i].length; j++) {
-                numsA[i][j] = i*(j+1);
-            }
+        // Criando arrays para armazenar os dados dos alunos
+        String[] nomes = new String[NUM_ALUNOS];
+        double[] mediaAnual = new double[NUM_ALUNOS];
+
+        Scanner scanner = new Scanner(System.in);
+
+        // Lendo os nomes e notas dos alunos
+        for (int i = 0; i < NUM_ALUNOS; i++) {
+            System.out.println("Digite o nome do aluno " + (i + 1) + ":");
+            nomes[i] = scanner.nextLine();
+
+            System.out.println("Digite a primeira nota do aluno " + nomes[i] + ":");
+            double nota1 = scanner.nextDouble();
+
+            System.out.println("Digite a segunda nota do aluno " + nomes[i] + ":");
+            double nota2 = scanner.nextDouble();
+
+            // Calculando a média anual
+            mediaAnual[i] = (nota1 + nota2) / 2;
+
+            // Consumindo o newline restante
+            scanner.nextLine();
         }
 
-        for (int[] nums : numsA) {
-            for (int num : nums) {
-                System.out.print(num + " ");
-            }
-            System.out.println();
+        // Criando uma lista de pares (nome e média) para classificação
+        Aluno[] alunos = new Aluno[NUM_ALUNOS];
+        for (int i = 0; i < NUM_ALUNOS; i++) {
+            alunos[i] = new Aluno(nomes[i], mediaAnual[i]);
         }
 
-        int totalElements = numsA.length * numsA[0].length;
+        // Ordenando os alunos pela média anual em ordem crescente
+        Arrays.sort(alunos, Comparator.comparingDouble(Aluno::getMediaAnual));
 
-        for (int[] ints : numsA) {
-            for (int anInt : ints) {
-                if (anInt % 2 == 0) {
-                    totalOdds++;
-                } else {
-                    totalEvens++;
-                }
-                finalOddRate = (totalOdds / totalElements) * 100;
-                finalEvenRate = (totalEvens / totalElements) * 100;
-            }
+        // Imprimindo a lista de alunos classificados
+        System.out.println("\nClassificação dos alunos por média anual:");
+        for (Aluno aluno : alunos) {
+            System.out.println(aluno.getNome() + " - Média Anual: " + aluno.getMediaAnual());
         }
 
-        System.out.println();
+        scanner.close();
+    }
+}
 
-        System.out.println("Total of Odd numbers: " + totalOdds + "\nTotal of Even Numbers: " + totalEvens + "\n");
+// Classe para armazenar dados de cada aluno
+class Aluno {
+    private final String nome;
+    private double mediaAnual;
 
-        System.out.println("Final Odd Rate: " + finalOddRate + "\nFinal Even Rate: " + finalEvenRate);
-
-
+    public Aluno(String nome, double mediaAnual) {
+        this.nome = nome;
+        this.mediaAnual = mediaAnual;
     }
 
+    public String getNome() {
+        return nome;
+    }
 
-
+    public double getMediaAnual() {
+        return mediaAnual;
+    }
 }
