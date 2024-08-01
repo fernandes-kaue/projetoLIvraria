@@ -1,72 +1,149 @@
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Scanner;
 
-public class Main {
+public class MatrixMultiplication {
 
     public static void main(String[] args) {
-
-        // Definindo o número de alunos
-        final int NUM_ALUNOS = 5;
-
-        // Criando arrays para armazenar os dados dos alunos
-        String[] nomes = new String[NUM_ALUNOS];
-        double[] mediaAnual = new double[NUM_ALUNOS];
-
         Scanner scanner = new Scanner(System.in);
 
-        // Lendo os nomes e notas dos alunos
-        for (int i = 0; i < NUM_ALUNOS; i++) {
-            System.out.println("Digite o nome do aluno " + (i + 1) + ":");
-            nomes[i] = scanner.nextLine();
+        int linhas1, colunas1, linhas2, colunas2;
 
-            System.out.println("Digite a primeira nota do aluno " + nomes[i] + ":");
-            double nota1 = scanner.nextDouble();
+        while (true) {
+            System.out.println("Digite o número de linhas da primeira matriz (máximo 10):");
+            linhas1 = scanner.nextInt();
+            System.out.println("Digite o número de colunas da primeira matriz (máximo 10):");
+            colunas1 = scanner.nextInt();
+            System.out.println("Digite o número de linhas da segunda matriz (máximo 10):");
+            linhas2 = scanner.nextInt();
+            System.out.println("Digite o número de colunas da segunda matriz (máximo 10):");
+            colunas2 = scanner.nextInt();
 
-            System.out.println("Digite a segunda nota do aluno " + nomes[i] + ":");
-            double nota2 = scanner.nextDouble();
+            if (linhas1 > 10 || colunas1 > 10 || linhas2 > 10 || colunas2 > 10) {
+                System.out.println("Tamanho máximo para linhas e colunas é 10. Tente novamente.");
+                continue;
+            }
 
-            // Calculando a média anual
-            mediaAnual[i] = (nota1 + nota2) / 2;
-
-            // Consumindo o newline restante
-            scanner.nextLine();
+            if (colunas1 != linhas2) {
+                System.out.println("O número de colunas da primeira matriz deve ser igual ao número de linhas da segunda matriz para a multiplicação. Tente novamente.");
+                continue;
+            }
+            break;
         }
 
-        // Criando uma lista de pares (nome e média) para classificação
-        Aluno[] alunos = new Aluno[NUM_ALUNOS];
-        for (int i = 0; i < NUM_ALUNOS; i++) {
-            alunos[i] = new Aluno(nomes[i], mediaAnual[i]);
+        int[][] matriz1 = new int[linhas1][colunas1];
+        int[][] matriz2 = new int[linhas2][colunas2];
+
+        System.out.println("Digite os elementos da primeira matriz:");
+        for (int i = 0; i < linhas1; i++) {
+            for (int j = 0; j < colunas1; j++) {
+                matriz1[i] = scanner.nextInt();
+            }
         }
 
-        // Ordenando os alunos pela média anual em ordem crescente
-        Arrays.sort(alunos, Comparator.comparingDouble(Aluno::getMediaAnual));
+        System.out.println("Digite os elementos da segunda matriz:");
+        for (int i = 0; i < linhas2; i++) {
+            for (int j = 0; j < colunas2; j++) {
+                matriz2[i][j] = scanner.nextInt();
+            }
+        }
 
-        // Imprimindo a lista de alunos classificados
-        System.out.println("\nClassificação dos alunos por média anual:");
-        for (Aluno aluno : alunos) {
-            System.out.println(aluno.getNome() + " - Média Anual: " + aluno.getMediaAnual());
+        int[][] result = multiplyMatrices(matriz1, matriz2, linhas1, colunas1, colunas2);
+
+        System.out.println("O resultado da multiplicação das matrizes é:");
+        for (int i = 0; i < linhas1; i++) {
+            for (int j = 0; j < colunas2; j++) {
+                System.out.print(result[i][j] + " ");
+            }
+            System.out.println();
         }
 
         scanner.close();
     }
+
+    public static int[][] multiplyMatrices(int[][] matrix1, int[][] matrix2, int rows1, int cols1, int cols2) {
+        int[][] result = new int[rows1][cols2];
+
+        for (int i = 0; i < rows1; i++) {
+            for (int j = 0; j < cols2; j++) {
+                for (int k = 0; k < cols1; k++) {
+                    result[i][j] += matrix1[i][k] * matrix2[k][j];
+                }
+            }
+        }
+
+        return result;
+    }
 }
 
-// Classe para armazenar dados de cada aluno
-class Aluno {
-    private final String nome;
-    private double mediaAnual;
+public class MatrixMultiplication {
 
-    public Aluno(String nome, double mediaAnual) {
-        this.nome = nome;
-        this.mediaAnual = mediaAnual;
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int rows1, cols1, rows2, cols2;
+
+        while (true) {
+            System.out.println("Digite o número de linhas da primeira matriz (máximo 10):");
+            rows1 = scanner.nextInt();
+            System.out.println("Digite o número de colunas da primeira matriz (máximo 10):");
+            cols1 = scanner.nextInt();
+            System.out.println("Digite o número de linhas da segunda matriz (máximo 10):");
+            rows2 = scanner.nextInt();
+            System.out.println("Digite o número de colunas da segunda matriz (máximo 10):");
+            cols2 = scanner.nextInt();
+
+            if (rows1 > 10 || cols1 > 10 || rows2 > 10 || cols2 > 10) {
+                System.out.println("Tamanho máximo para linhas e colunas é 10. Tente novamente.");
+                continue;
+            }
+
+            if (cols1 != rows2) {
+                System.out.println("O número de colunas da primeira matriz deve ser igual ao número de linhas da segunda matriz para a multiplicação. Tente novamente.");
+                continue;
+            }
+            break;
+        }
+
+        int[][] matrix1 = new int[rows1][cols1];
+        int[][] matrix2 = new int[rows2][cols2];
+
+        System.out.println("Digite os elementos da primeira matriz:");
+        for (int i = 0; i < rows1; i++) {
+            for (int j = 0; j < cols1; j++) {
+                matrix1[i] = scanner.nextInt();
+            }
+        }
+
+        System.out.println("Digite os elementos da segunda matriz:");
+        for (int i = 0; i < rows2; i++) {
+            for (int j = 0; j < cols2; j++) {
+                matrix2[i][j] = scanner.nextInt();
+            }
+        }
+
+        int[][] result = multiplyMatrices(matrix1, matrix2, rows1, cols1, cols2);
+
+        System.out.println("O resultado da multiplicação das matrizes é:");
+        for (int i = 0; i < rows1; i++) {
+            for (int j = 0; j < cols2; j++) {
+                System.out.print(result[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        scanner.close();
     }
 
-    public String getNome() {
-        return nome;
-    }
+    public static int[][] multiplyMatrices(int[][] matrix1, int[][] matrix2, int rows1, int cols1, int cols2) {
+        int[][] result = new int[rows1][cols2];
 
-    public double getMediaAnual() {
-        return mediaAnual;
+        for (int i = 0; i < rows1; i++) {
+            for (int j = 0; j < cols2; j++) {
+                for (int k = 0; k < cols1; k++) {
+                    result[i][j] += matrix1[i][k] * matrix2[k][j];
+                }
+            }
+        }
+
+        return result;
     }
 }
