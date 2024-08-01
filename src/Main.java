@@ -39,19 +39,19 @@ public class Main {
             for (int j = 0; j < colunas2; j++)
                 matrix2[i][j] = sc.nextInt();
 
-        int[][] result = multiplyMatrices(matrix1, matrix2, linhas1, colunas1, colunas2);
+        int[][] result = multiplyMatrices(matrix1, matrix2, linhas1, colunas2, colunas1);
 
         System.out.println("O resultado da multiplicação das matrizes é:");
-        for (int i = 0; i < linhas1; i++) {
-            for (int j = 0; j < colunas2; j++)
-                System.out.print(result[i][j] + " ");
+        for (int[] row : result) {
+            for (int elem : row)
+                System.out.print(elem + " ");
             System.out.println();
         }
 
         sc.close();
     }
 
-    public static int[][] multiplyMatrices(int[][] matrix1, int[][] matrix2, int rows1, int cols1, int cols2) {
+    public static int[][] multiplyMatrices(int[][] matrix1, int[][] matrix2, int rows1, int cols2, int cols1) {
         int[][] result = new int[rows1][cols2];
         for (int i = 0; i < rows1; i++)
             for (int j = 0; j < cols2; j++)
@@ -60,3 +60,5 @@ public class Main {
         return result;
     }
 }
+
+
