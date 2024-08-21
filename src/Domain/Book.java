@@ -1,4 +1,4 @@
-package Library;
+package Domain;
 
 /**
  * @param title attributes

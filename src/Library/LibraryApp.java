@@ -1,5 +1,8 @@
 package Library;
 
+import Domain.Book;
+import Domain.Library;
+
 import java.awt.*;
 import java.util.List;
 import javax.swing.*;
