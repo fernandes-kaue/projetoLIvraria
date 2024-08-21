@@ -1,4 +1,4 @@
-package Library;
+package Library.domain;
 
 /**
  * @param title attributes
@@ -9,7 +9,7 @@ public record Book(String title, String author, String ISBN) {
     // specific methods
     @Override
     public String toString() {
-        return title;
+        return "Title: " + title + ", Author: " + author + ", ISBN: " + ISBN;
     }
 
     public String getTitle() {

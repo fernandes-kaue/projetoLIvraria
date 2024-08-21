@@ -1,11 +1,14 @@
 package Library;
 
+import Library.domain.Book;
+import Library.domain.Library;
+import Library.repository.Repository;
+
 import java.awt.*;
-import java.util.List;
 import javax.swing.*;
 
 public class LibraryApp {
-    static Library library = new Library();
+    static Repository repository = new Repository();
 
     public static void main(String[] args) {
 
@@ -93,15 +96,15 @@ public class LibraryApp {
         String title = JOptionPane.showInputDialog("What's the name of the book you want to add?");
         String author = JOptionPane.showInputDialog("Who's the author of the said book?");
         String ISBN = JOptionPane.showInputDialog("What's the ISBN of the said book?");
-        library.addBook(new Book(title, author, ISBN));
+        repository.addBook(new Book(title, author, ISBN));
         JOptionPane.showMessageDialog(null, "Book added successfully!");
 
     }
 
     private static void item2() {
         String bookTitle = JOptionPane.showInputDialog("What's the name of the book you want to remove?");
-        if (library.findBook(bookTitle) != -1) {
-            library.removeBook(bookTitle);
+        if (repository.findBook(bookTitle) != -1) {
+            repository.removeBook(bookTitle);
         } else {
             JOptionPane.showMessageDialog(null, "Book not found!");
         }
@@ -109,7 +112,7 @@ public class LibraryApp {
 
     private static void item3() {
     String title = JOptionPane.showInputDialog("What's the name of the book you want to find?");
-    int index = library.findBook(title);  // Store the result once
+    int index = repository.findBook(title);  // Store the result once
     if (index == -1) {
         JOptionPane.showMessageDialog(null, "Book not found!");
     } else {
@@ -117,18 +120,12 @@ public class LibraryApp {
     }
 }
 
-
     private static void item4() {
-        List<String> books = library.listAllBooks();
 
-        if (books.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No books available.");
+        if (repository.isLibraryEmpty()) {
+            JOptionPane.showMessageDialog(null, repository.getBooklist());
         } else {
-            StringBuilder bookList = new StringBuilder();
-            for (String book : books) {
-                bookList.append(book).append("\n");
-            }
-            JOptionPane.showMessageDialog(null, bookList.toString(), "List of Books", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, repository.getBooklist(), "List of Books", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
