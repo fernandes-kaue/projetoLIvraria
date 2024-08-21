@@ -1,19 +1,5 @@
-package Library;
+package Library
 
-/**
- * @param title attributes
- */
-public record Book(String title, String author, String ISBN) {
-    // constructor
-
-    // specific methods
-    @Override
-    public String toString() {
-        return title;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
+data class Book(val title: String, val author:String, val ISBN: String) {
+    override fun toString() = "Title: $title Author: $author ISBN: $ISBN";
 }

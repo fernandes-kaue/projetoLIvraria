@@ -1,59 +1,35 @@
-package Library;
+package Library
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Library {
-    // attributes
-    private ArrayList<Book> books;
-
-    // constructor
-    public Library() {
-        books = new ArrayList<>();
+data class Library(
+    private val books: MutableList<Book> = mutableListOf()
+) {
+    fun removeBook(book: Book) {
+        books.remove(book)
     }
 
-    // specific methods
-
-
-    public void removeBook(Book book) {
-        books.remove(book);
+    fun removeBook(index: Int) {
+        books.removeAt(index)
     }
 
-    public void removeBook(int index) {
-        if (index < 0 || index >= books.size()) {
-            System.out.println("Invalid index.");
-        } else {
-            books.remove(index);
+    fun addBook(book: Book) {
+        books.add(book)
+    }
+
+    fun removeBook(title: String) = books.removeIf { it.title == title }
+
+    fun findBook(title: String) = books.find { it.title == title }?.let {
+        books.indexOf(it)
+    }
+
+    fun listAllBooks(): List<String> = books.map { it.toString() }
+
+    override fun toString(): String {
+        val bookList = StringBuilder()
+        for (book in books) {
+            bookList.append(book).append("\n")
         }
+        return bookList.toString()
     }
 
-    public void addBook(Book book) {
-        books.add(book);
-    }
-
-    public void removeBook(String title) {
-        books.removeIf(book -> book.getTitle().equals(title));
-    }
-
-    public int findBook(String title) {
-        for (int i = 0; i < books.size(); i++) {
-            if (books.get(i).getTitle().equals(title)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public List<String> listAllBooks() {
-        List<String> bookList = new ArrayList<>();
-        for (Book book : books) {
-            bookList.add("Title: " + book.title() + ", Author: " + book.author() + ", ISBN: " + book.ISBN());
-        }
-        return bookList;
-    }
-
-    // Optional: Getter for the books list
-    public List<Book> getBooks() {
-        return books;
-    }
+    fun isEmpty(): Boolean = books.isEmpty()
 }
