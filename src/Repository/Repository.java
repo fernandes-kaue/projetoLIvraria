@@ -3,66 +3,58 @@ package Repository;
 import Domain.Book;
 import Domain.Library;
 
-import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Repository {
 
-    private static Library library;
+     static Library library;
 
     public Repository(Library library){
-        Repository.library = library;
+        this.library = new Library();
     }
 
-
-    // menu items
-    public static void item1() {
-        // Implement functionality for adding a book
-        String title = JOptionPane.showInputDialog("What's the name of the book you want to add?");
-        String author = JOptionPane.showInputDialog("Who's the author of the said book?");
-        String ISBN = JOptionPane.showInputDialog("What's the ISBN of the said book?");
-        library.addBook(new Book(title, author, ISBN));
-        JOptionPane.showMessageDialog(null, "Book added successfully!");
-
+    // specific methods
+    public void removeBook(Book book) {
+        library.books.remove(book);
     }
 
-    public static void item2() {
-        String bookTitle = JOptionPane.showInputDialog("What's the name of the book you want to remove?");
-        if (library.findBook(bookTitle) != -1) {
-            library.removeBook(bookTitle);
+    public void removeBook(int index) {
+        if (index < 0 || index >= library.books.size()) {
+            System.out.println("Invalid index.");
         } else {
-            JOptionPane.showMessageDialog(null, "Book not found!");
+            library.books.remove(index);
         }
     }
 
-    public static void item3() {
-        String title = JOptionPane.showInputDialog("What's the name of the book you want to find?");
-        int index = library.findBook(title);  // Store the result once
-        if (index == -1) {
-            JOptionPane.showMessageDialog(null, "Book not found!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Book found at index: " + (index + 1));
-        }
+    public void addBook(Book book) {
+        library.books.add(book);
     }
 
+    public void removeBook(String title) {
+        library.books.removeIf(book -> book.getTitle().equals(title));
+    }
 
-    public static void item4() {
-        List<String> books = library.listAllBooks();
-
-        if (books.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No books available.");
-        } else {
-            StringBuilder bookList = new StringBuilder();
-            for (String book : books) {
-                bookList.append(book).append("\n");
+    public int findBook(String title) {
+        for (int i = 0; i < library.books.size(); i++) {
+            if (library.books.get(i).getTitle().equals(title)) {
+                return i;
             }
-            JOptionPane.showMessageDialog(null, bookList.toString(), "List of Books", JOptionPane.INFORMATION_MESSAGE);
         }
+        return -1;
     }
 
-    public static void item5() {
-        JOptionPane.showMessageDialog(null, "Exiting the application...");
-        System.exit(0);
+    public List<String> listAllBooks() {
+        List<String> bookList = new ArrayList<>();
+        for (Book book : library.books) {
+            bookList.add("Title: " + book.title() + ", Author: " + book.author() + ", ISBN: " + book.ISBN());
+        }
+        return bookList;
+    }
+
+    // Optional: Getter for the books list
+    public List<Book> getBooks() {
+        return library.books;
     }
 
 }

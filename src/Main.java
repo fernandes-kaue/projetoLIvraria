@@ -1,7 +1,9 @@
+import Domain.Book;
 import Domain.Library;
 import Repository.Repository;
 
 import java.awt.*;
+import java.util.List;
 import javax.swing.*;
 
 public class Main {
@@ -61,31 +63,81 @@ public class Main {
         // Add action listeners for buttons
         addBook.addActionListener(e -> {
             scrollPane.setVisible(true);
-            Repository.item1();
+            item1();
         });
 
         removeBook.addActionListener(e -> {
             scrollPane.setVisible(true);
-            Repository.item2();
+            item2();
         });
 
         findBook.addActionListener(e -> {
             scrollPane.setVisible(true);
-            Repository.item3();
+            item3();
         });
 
         listAllBooks.addActionListener(e -> {
             scrollPane.setVisible(true);
-            Repository.item4();
+            item4();
         });
 
         exit.addActionListener(e -> {
-            Repository.item5();
+            item5();
             System.exit(0);
         });
 
         // Set frame visibility
         frame.setVisible(true);
+    }
+
+    // menu items
+    public static void item1() {
+        // Implement functionality for adding a book
+        String title = JOptionPane.showInputDialog("What's the name of the book you want to add?");
+        String author = JOptionPane.showInputDialog("Who's the author of the said book?");
+        String ISBN = JOptionPane.showInputDialog("What's the ISBN of the said book?");
+        repository.addBook(new Book(title, author, ISBN));
+        JOptionPane.showMessageDialog(null, "Book added successfully!");
+
+    }
+
+    public static void item2() {
+        String bookTitle = JOptionPane.showInputDialog("What's the name of the book you want to remove?");
+        if (repository.findBook(bookTitle) != -1) {
+            repository.removeBook(bookTitle);
+        } else {
+            JOptionPane.showMessageDialog(null, "Book not found!");
+        }
+    }
+
+    public static void item3() {
+        String title = JOptionPane.showInputDialog("What's the name of the book you want to find?");
+        int index = repository.findBook(title);  // Store the result once
+        if (index == -1) {
+            JOptionPane.showMessageDialog(null, "Book not found!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Book found at index: " + (index + 1));
+        }
+    }
+
+
+    public static void item4() {
+        List<String> books = repository.listAllBooks();
+
+        if (books.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No books available.");
+        } else {
+            StringBuilder bookList = new StringBuilder();
+            for (String book : books) {
+                bookList.append(book).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, bookList.toString(), "List of Books", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    public static void item5() {
+        JOptionPane.showMessageDialog(null, "Exiting the application...");
+        System.exit(0);
     }
 
 }
