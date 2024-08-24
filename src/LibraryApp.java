@@ -1,5 +1,3 @@
-package Library;
-
 import Domain.Book;
 import Domain.Library;
 
