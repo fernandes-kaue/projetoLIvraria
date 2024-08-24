@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.List;
 import javax.swing.*;
 
-public class Main {
+public class LibraryApp {
     static Repository repository = new Repository(new Library());
 
     public static void main(String[] args) {
