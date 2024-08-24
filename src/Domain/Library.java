@@ -13,8 +13,6 @@ public class Library {
     }
 
     // specific methods
-
-
     public void removeBook(Book book) {
         books.remove(book);
     }

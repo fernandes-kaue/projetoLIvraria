@@ -1,12 +1,11 @@
-import Domain.Book;
 import Domain.Library;
+import Repository.Repository;
 
 import java.awt.*;
-import java.util.List;
 import javax.swing.*;
 
-public class LibraryApp {
-    static Library library = new Library();
+public class Main {
+    static Repository repository = new Repository(new Library());
 
     public static void main(String[] args) {
 
@@ -62,26 +61,26 @@ public class LibraryApp {
         // Add action listeners for buttons
         addBook.addActionListener(e -> {
             scrollPane.setVisible(true);
-            item1();
+            Repository.item1();
         });
 
         removeBook.addActionListener(e -> {
             scrollPane.setVisible(true);
-            item2();
+            Repository.item2();
         });
 
         findBook.addActionListener(e -> {
             scrollPane.setVisible(true);
-            item3();
+            Repository.item3();
         });
 
         listAllBooks.addActionListener(e -> {
             scrollPane.setVisible(true);
-            item4();
+            Repository.item4();
         });
 
         exit.addActionListener(e -> {
-            item5();
+            Repository.item5();
             System.exit(0);
         });
 
@@ -89,52 +88,4 @@ public class LibraryApp {
         frame.setVisible(true);
     }
 
-    private static void item1() {
-        // Implement functionality for adding a book
-        String title = JOptionPane.showInputDialog("What's the name of the book you want to add?");
-        String author = JOptionPane.showInputDialog("Who's the author of the said book?");
-        String ISBN = JOptionPane.showInputDialog("What's the ISBN of the said book?");
-        library.addBook(new Book(title, author, ISBN));
-        JOptionPane.showMessageDialog(null, "Book added successfully!");
-
-    }
-
-    private static void item2() {
-        String bookTitle = JOptionPane.showInputDialog("What's the name of the book you want to remove?");
-        if (library.findBook(bookTitle) != -1) {
-            library.removeBook(bookTitle);
-        } else {
-            JOptionPane.showMessageDialog(null, "Book not found!");
-        }
-    }
-
-    private static void item3() {
-    String title = JOptionPane.showInputDialog("What's the name of the book you want to find?");
-    int index = library.findBook(title);  // Store the result once
-    if (index == -1) {
-        JOptionPane.showMessageDialog(null, "Book not found!");
-    } else {
-        JOptionPane.showMessageDialog(null, "Book found at index: " + (index + 1));
-    }
-}
-
-
-    private static void item4() {
-        List<String> books = library.listAllBooks();
-
-        if (books.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No books available.");
-        } else {
-            StringBuilder bookList = new StringBuilder();
-            for (String book : books) {
-                bookList.append(book).append("\n");
-            }
-            JOptionPane.showMessageDialog(null, bookList.toString(), "List of Books", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-
-    private static void item5() {
-        JOptionPane.showMessageDialog(null, "Exiting the application...");
-        System.exit(0);
-    }
 }
