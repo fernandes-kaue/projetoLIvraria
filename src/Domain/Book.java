@@ -4,9 +4,8 @@ package Domain;
  * @param title attributes
  */
 public record Book(String title, String author, String ISBN) {
-    // constructor
 
-    // specific methods
+    // toString override
     @Override
     public String toString() {
         return "Title: " + title + "Author: " + author + "ISBN: " + ISBN;
