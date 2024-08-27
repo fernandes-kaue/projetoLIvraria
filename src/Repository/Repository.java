@@ -11,7 +11,7 @@ public class Repository {
      static Library library;
 
     public Repository(Library library){
-        this.library = new Library();
+        Repository.library = new Library();
     }
 
     // specific methods
